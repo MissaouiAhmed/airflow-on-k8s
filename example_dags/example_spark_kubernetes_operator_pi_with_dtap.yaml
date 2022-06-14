@@ -9,7 +9,7 @@ spec:
     spark.mapr.user.secret: spark-user-secret
     # Note: You do not need to specify a spark.eventLog.dir
     #       it will be auto-generated with the pattern "maprfs:///apps/spark/<namespace>"
-    spark.eventLog.dir: "maprfs:///apps/spark/sampletenant"
+    #spark.eventLog.dir: "maprfs:///apps/spark/mlops"
   type: Scala
   sparkVersion: 3.1.2
   mode: cluster
@@ -33,7 +33,7 @@ spec:
       version: 3.1.2
     # Note: You do not need to specify a serviceAccount
     #       it will be auto-generated referencing the pre-existing "hpe-<namespace>"
-    serviceAccount: hpe-{{dag_run.conf.get("namespace", "")}}
+    #serviceAccount: hpe-{{dag_run.conf.get("namespace", "")}}
   executor:
     cores: 1
     coreLimit: "1000m"
