@@ -41,6 +41,7 @@ sensor = SparkKubernetesSensor(
 )
 ls_process = BashOperator(
     task_id='sleep_process',
-    bash_command='ls /'
+    bash_command='ls /',
+    dag=dag
 )
 submit >> sensor >> ls_process
