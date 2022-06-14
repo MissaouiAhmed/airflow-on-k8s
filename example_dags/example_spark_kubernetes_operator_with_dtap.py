@@ -67,7 +67,7 @@ dag = DAG(
 submit = SparkKubernetesOperator(
     task_id='spark_pi_submit',
     namespace='{{dag_run.conf.get("namespace", "sampletenant")}}',
-    application_file="example_spark_kubernetes_operator_pi.yaml",
+    application_file="example_spark_kubernetes_operator_pi_with_dtap.yaml",
     kubernetes_conn_id="kubernetes_in_cluster",
     do_xcom_push=True,
     dag=dag,
@@ -85,4 +85,10 @@ sensor = SparkKubernetesSensor(
     attach_log=True
 )
 
-submit >> sensor
+
+ls_process = BashOperator(
+    task_id='sleep_process',
+    bash_command='ls /'
+)
+
+submit >> sensor >> ls_process
