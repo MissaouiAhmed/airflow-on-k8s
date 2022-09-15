@@ -15,7 +15,7 @@ default_args = {
     'retries': 3
 }
 dag = DAG(
-    'spark_pi_sleep',
+    'spark_pi_sleep2',
     default_args=default_args,
     schedule_interval=timedelta(days=1),
     tags=['example']
