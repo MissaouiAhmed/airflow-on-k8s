@@ -1,8 +1,7 @@
 apiVersion: "sparkoperator.hpe.com/v1beta2"
 kind: SparkApplication
 metadata:
-  name: spark-pi-secure
-  namespace: sampletenant
+  name: spark-pi-secure-hpe-mlops-
 spec:
   type: Scala
   sparkVersion: 3.2.0
