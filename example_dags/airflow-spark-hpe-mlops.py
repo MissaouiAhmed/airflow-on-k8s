@@ -55,7 +55,7 @@ default_args = {
 # [START instantiate_dag]
 
 dag = DAG(
-    'airflow-spark-mlops',
+    'airflow-spark-hpe-mlops',
     default_args=default_args,
     schedule_interval=timedelta(days=1),
     tags=['example']
