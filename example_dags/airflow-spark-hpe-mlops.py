@@ -74,16 +74,6 @@ submit = SparkKubernetesOperator(
     enable_impersonation_from_ldap_user=False
 )
 
-sensor = SparkKubernetesSensor(
-    task_id='spark_word_count_monitor',
-    namespace='hpe-mlops',
-    application_name="{{ task_instance.xcom_pull(task_ids='spark_word_count')['metadata']['name'] }}",
-    kubernetes_conn_id="kubernetes_in_cluster",
-    dag=dag,
-    api_group="sparkoperator.hpe.com",
-    attach_log=True
-)
-
-submit >> sensor
+submit 
 
 
