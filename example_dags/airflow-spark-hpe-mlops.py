@@ -75,16 +75,6 @@ submit = SparkKubernetesOperator(
     enable_impersonation_from_ldap_user=False
 )
 
-sensor = SparkKubernetesSensor(
-    task_id='spark_pi_monitor',
-    namespace='hpe-mlops',
-    application_name="{{ task_instance.xcom_pull(task_ids='spark_pi_submit')['metadata']['name'] }}",
-    kubernetes_conn_id="kubernetes_in_cluster",
-    dag=dag,
-    api_group="sparkoperator.hpe.com",
-    attach_log=True
-)
-
 
 submitwordcount = SparkKubernetesOperator(
     task_id='spark_word_count',
@@ -98,15 +88,7 @@ submitwordcount = SparkKubernetesOperator(
 )
 
 
-sensorswordcount = SparkKubernetesSensor(
-    task_id='spark_word_count_monitor',
-    namespace='hpe-mlops',
-    application_name="{{ task_instance.xcom_pull(task_ids='spark_word_count')['metadata']['name'] }}",
-    kubernetes_conn_id="kubernetes_in_cluster",
-    dag=dag,
-    api_group="sparkoperator.hpe.com",
-    attach_log=True
-)
+
 
 
 submit >> submitwordcount 
