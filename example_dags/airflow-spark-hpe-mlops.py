@@ -109,4 +109,4 @@ sensorswordcount = SparkKubernetesSensor(
 )
 
 
-submit >> sensor >> submitwordcount >> sensorswordcount
+submit >> submitwordcount 
