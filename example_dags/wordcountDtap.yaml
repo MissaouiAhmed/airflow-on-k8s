@@ -1,0 +1,46 @@
+apiVersion: "sparkoperator.hpe.com/v1beta2"
+kind: SparkApplication
+metadata:
+  name: spark-wordcount-secure
+spec:
+  sparkConf:
+    spark.hadoop.fs.dtap.impl: "com.bluedata.hadoop.bdfs.Bdfs"
+    spark.hadoop.fs.AbstractFileSystem.dtap.impl: "com.bluedata.hadoop.bdfs.BdAbstractFS"
+    spark.hadoop.fs.dtap.impl.disable.cache: "false"
+    spark.driver.extraClassPath: "/opt/bdfs/bluedata-dtap.jar"
+    spark.executor.extraClassPath: "/opt/bdfs/bluedata-dtap.jar"
+    spark.local.dir : "/tmp"
+    spark.jars.ivy : "/tmp/.ivy"     
+    spark.mapr.user.secret: mapr-user-secret-2854107419 
+  type: Java
+  sparkVersion: 3.1.2
+  mode: cluster
+  deps:
+    jars:
+      - local:///opt/bdfs/bluedata-dtap.jar
+  image: gcr.io/mapr-252711/spark-3.1.2:202202161825P150
+  imagePullPolicy: Always
+  mainClass: org.apache.spark.examples.JavaWordCount
+  mainApplicationFile: "local:///opt/mapr/spark/spark-3.1.2/examples/jars/spark-examples_2.12-3.1.2.3-eep-800.jar"  
+  restartPolicy:
+    type: Never
+  arguments:
+    - dtap://TenantStorage/input.txt
+  imagePullSecrets:
+    - imagepull
+  driver:
+    cores: 1
+    coreLimit: "1000m"
+    memory: "512m"
+    labels:
+      version: 3.1.2
+      hpecp.hpe.com/dtap: hadoop2
+  executor:
+    cores: 1
+    coreLimit: "1000m"
+    instances: 2
+    memory: "512m"
+    labels:
+      version: 3.1.2
+      hpecp.hpe.com/dtap: hadoop2
+
