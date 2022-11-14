@@ -55,25 +55,12 @@ default_args = {
 # [START instantiate_dag]
 
 dag = DAG(
-    'airflow-spark-hpe-mlops',
+    'airflow-wc-spark-hpe-mlops',
     default_args=default_args,
     schedule_interval=timedelta(days=1),
     tags=['example']
 )
 
-# spark = open(
-#     "example_spark_kubernetes_operator_pi.yaml").read()
-
-submit = SparkKubernetesOperator(
-    task_id='spark_pi_submit',
-    namespace='hpe-mlops',
-    application_file="example_spark_kubernetes_operator_pi.yaml",
-    kubernetes_conn_id="kubernetes_in_cluster",
-    do_xcom_push=True,
-    dag=dag,
-    api_group="sparkoperator.hpe.com",
-    enable_impersonation_from_ldap_user=False
-)
 
 
 submitwordcount = SparkKubernetesOperator(
@@ -90,5 +77,4 @@ submitwordcount = SparkKubernetesOperator(
 
 
 
-
-submit >> submitwordcount 
+submitwordcount 
