@@ -1,7 +1,7 @@
 apiVersion: "sparkoperator.hpe.com/v1beta2"
 kind: SparkApplication
 metadata:  
-  name: "spark-wordcount-af-{{ uuidv4}}"
+  name: "af-spark-wc-{{ task_instance.start_date[0:10] | replace('+', '-') | replace(':', '-') | replace('.', '-') | replace('T', '-') | replace(' ', '-') | replace('_', '-')}}"
 spec:
   sparkConf:
     spark.hadoop.fs.dtap.impl: "com.bluedata.hadoop.bdfs.Bdfs"
