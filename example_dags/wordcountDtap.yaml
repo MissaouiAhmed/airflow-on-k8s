@@ -1,8 +1,7 @@
 apiVersion: "sparkoperator.hpe.com/v1beta2"
 kind: SparkApplication
 metadata:
-  name: spark-wordcount-secure-
-  namespace: hpe-mlops
+  name: spark-wordcount-secure-  
 spec:
   sparkConf:
     spark.hadoop.fs.dtap.impl: "com.bluedata.hadoop.bdfs.Bdfs"
@@ -44,4 +43,3 @@ spec:
     labels:
       version: 3.1.2
       hpecp.hpe.com/dtap: hadoop2
-
