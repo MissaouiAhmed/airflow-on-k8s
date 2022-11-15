@@ -1,7 +1,7 @@
 apiVersion: "sparkoperator.hpe.com/v1beta2"
 kind: SparkApplication
-metadata:
-  name: "spark-wordcount-airflow-{{ task_instance.start_date | replace('+', '-') | replace(':', '-') | replace('.', '-') | replace('T', '-') | replace(' ', '-') | replace('_', '-')}}"
+metadata:  
+  name: "spark-wordcount-af-{{ uuidv4}}"
 spec:
   sparkConf:
     spark.hadoop.fs.dtap.impl: "com.bluedata.hadoop.bdfs.Bdfs"

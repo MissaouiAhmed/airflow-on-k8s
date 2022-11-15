@@ -1,0 +1,2 @@
+name: "spark-wordcount-airflow-{{ task_instance.start_date | replace('+', '-') | replace(':', '-') | replace('.', '-') | replace('T', '-') | replace(' ', '-') | replace('_', '-')}}"
+name: "spark-wordcount-airflow-{{ task_instance.execution_date | replace('+', '-') | replace(':', '-') | replace('.', '-') | replace('T', '-') | replace(' ', '-') | replace('_', '-')}}"
