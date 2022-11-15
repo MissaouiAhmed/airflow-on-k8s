@@ -1,7 +1,7 @@
 apiVersion: "sparkoperator.hpe.com/v1beta2"
 kind: SparkApplication
 metadata:
-  name: spark-wordcount  
+  name: spark-wordcount-secure-with-lib-  
 spec:
   sparkConf:
     spark.hadoop.fs.dtap.impl: "com.bluedata.hadoop.bdfs.Bdfs"
@@ -35,6 +35,7 @@ spec:
     labels:
       version: 3.1.2
       hpecp.hpe.com/dtap: hadoop2
+    serviceAccount: ecp-tenant-member-sa
   executor:
     cores: 1
     coreLimit: "1000m"
@@ -43,3 +44,4 @@ spec:
     labels:
       version: 3.1.2
       hpecp.hpe.com/dtap: hadoop2
+    serviceAccount: ecp-tenant-member-sa
