@@ -22,20 +22,9 @@ with DAG(
         image='bash:latest',
         cmds=['bash', '-c'],
         labels={"app": "airflow"},
-        arguments=["echo 'Hello from Airflow morpheus volume!' > /mnt/datafabric-volume/morpheus-airflow.txt"],
+        arguments=["ls -ali /mnt"],
         is_delete_operator_pod=True,
     )
 
-    read_file = KubernetesPodOperator(
-        task_id='read_file',
-        name='read-file',
-        namespace='airflow',
-        image='bash:latest',
-        cmds=['bash', '-c'],
-        labels={"app": "airflow"},
-        arguments=["cat /mnt/datafabric-volume/morpheus-airflow.txt"],
-        is_delete_operator_pod=True,
-    )
-
-    create_file >> read_file
+    create_file 
 
