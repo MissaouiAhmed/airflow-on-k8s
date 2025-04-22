@@ -8,8 +8,7 @@ default_args = {
 }
 
 with DAG(
-    dag_id='morpheus_read_write-datafabric',
-    app='airflow',
+    dag_id='morpheus_read_write-datafabric',    
     schedule_interval=None,
     default_args=default_args,
     catchup=False,
