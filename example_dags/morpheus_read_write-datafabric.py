@@ -14,13 +14,11 @@ with DAG(
     catchup=False,
 ) as dag:
 
-        # 1. Define the Volume (e.g., PVC)
     volume = k8s.V1Volume(
         name='my-shared-volume',
         persistent_volume_claim=k8s.V1PersistentVolumeClaimVolumeSource(claim_name='test-datafabric-airflow-shared-volume')
     )
 
-    # 2. Define the VolumeMount
     volume_mount = k8s.V1VolumeMount(
         mount_path='/mnt/datafabric-volume',  # Path inside the container
         name='my-shared-volume',
@@ -40,7 +38,7 @@ with DAG(
         is_delete_operator_pod=True,
     )
 
-create_file = KubernetesPodOperator(
+    create_file = KubernetesPodOperator(
         task_id='create_file',
         name='create-file',
         namespace='airflow',
