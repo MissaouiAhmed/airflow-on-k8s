@@ -21,6 +21,7 @@ with DAG(
         namespace='airflow',
         image='bash:latest',
         cmds=['bash', '-c'],
+        labels={"app": "airflow"},
         arguments=["echo 'Hello from Airflow morpheus volume!' > /mnt/datafabric-volume/morpheus-airflow.txt"],
         is_delete_operator_pod=True,
     )
@@ -31,6 +32,7 @@ with DAG(
         namespace='airflow',
         image='bash:latest',
         cmds=['bash', '-c'],
+        labels={"app": "airflow"},
         arguments=["cat /mnt/datafabric-volume/morpheus-airflow.txt"],
         is_delete_operator_pod=True,
     )
