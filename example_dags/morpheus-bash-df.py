@@ -8,22 +8,12 @@ default_args = {
 }
 
 with DAG(
-    dag_id='test_volume_mount_dag',
+    dag_id='morpheus_read_write-datafabric',
     schedule_interval=None,
     default_args=default_args,
     catchup=False,
 ) as dag:
 
-    volume = k8s.V1Volume(
-        name='test-volume',
-        empty_dir=k8s.V1EmptyDirVolumeSource(),
-    )
-
-    volume_mount = k8s.V1VolumeMount(
-        mount_path='/mnt/test',
-        name='test-volume',
-        read_only=False,
-    )
 
     create_file = KubernetesPodOperator(
         task_id='create_file',
@@ -31,9 +21,7 @@ with DAG(
         namespace='airflow',
         image='bash:latest',
         cmds=['bash', '-c'],
-        arguments=["echo 'Hello from Airflow volume!' > /mnt/datafabric-volume/testfile.txt"],
-        volumes=[volume],
-        volume_mounts=[volume_mount],
+        arguments=["echo 'Hello from Airflow morpheus volume!' > /mnt/datafabric-volume/morpheus-airflow.txt"],
         is_delete_operator_pod=True,
     )
 
@@ -43,9 +31,7 @@ with DAG(
         namespace='airflow',
         image='bash:latest',
         cmds=['bash', '-c'],
-        arguments=["cat /mnt/datafabric-volume/testfile.txt"],
-        volumes=[volume],
-        volume_mounts=[volume_mount],
+        arguments=["cat /mnt/datafabric-volume/morpheus-airflow.txt"],
         is_delete_operator_pod=True,
     )
 
