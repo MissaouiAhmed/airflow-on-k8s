@@ -23,7 +23,21 @@ with DAG(
         mount_path='/mnt/datafabric-volume',  # Path inside the container
         name='my-shared-volume',
         read_only=False
-    )    
+    )
+
+    list_files = KubernetesPodOperator(
+        task_id='list_files',
+        name='list_files',
+        namespace='airflow',
+        image='bash:latest',
+        cmds=['bash', '-c'],
+        labels={"app": "airflow"},
+        arguments=["ls -ali /mnt"],
+        volumes=[volume],
+        volume_mounts=[volume_mount],
+        is_delete_operator_pod=True,
+    )
+
     create_file = KubernetesPodOperator(
         task_id='create_file',
         name='create-file',
@@ -31,11 +45,25 @@ with DAG(
         image='bash:latest',
         cmds=['bash', '-c'],
         labels={"app": "airflow"},
-        arguments=["ls -ali /mnt"],
+        arguments=["echo 'Hello from Airflow morpheus volume!' > /mnt/datafabric-volume/morpheus-airflow.txt"],
         volumes=[volume],
-        volume_mounts=[volume_mount],        
+        volume_mounts=[volume_mount],
         is_delete_operator_pod=True,
     )
 
-    create_file 
+    read_file = KubernetesPodOperator(
+        task_id='read_file',
+        name='read-file',
+        namespace='airflow',
+        image='bash:latest',
+        cmds=['bash', '-c'],
+        labels={"app": "airflow"},
+        arguments=["cat /mnt/datafabric-volume/morpheus-airflow.txt"],
+        volumes=[volume],
+        volume_mounts=[volume_mount],
+        is_delete_operator_pod=True,
+    )
+
+    list_files >> create_file >> read_file
+    
 
