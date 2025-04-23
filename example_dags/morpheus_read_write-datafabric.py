@@ -32,7 +32,7 @@ with DAG(
         image='bash:latest',
         cmds=['bash', '-c'],
         labels={"app": "airflow"},
-        arguments=["ls -ali /mnt"],
+        arguments=["ls -ali /mnt/datafabric-volume"],
         volumes=[volume],
         volume_mounts=[volume_mount],
         is_delete_operator_pod=True,
@@ -64,6 +64,6 @@ with DAG(
         is_delete_operator_pod=True,
     )
 
-    list_files >> create_file >> read_file
+    list_files >> create_file >> read_file >> list_files 
     
 
