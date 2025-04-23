@@ -36,6 +36,8 @@ with DAG(
         volumes=[volume],
         volume_mounts=[volume_mount],
         is_delete_operator_pod=True,
+        do_xcom_push=True,
+        get_logs=True,
     )
 
     create_file = KubernetesPodOperator(
@@ -49,6 +51,8 @@ with DAG(
         volumes=[volume],
         volume_mounts=[volume_mount],
         is_delete_operator_pod=True,
+        do_xcom_push=True,
+        get_logs=True,
     )
 
     read_file = KubernetesPodOperator(
@@ -62,6 +66,8 @@ with DAG(
         volumes=[volume],
         volume_mounts=[volume_mount],
         is_delete_operator_pod=True,
+        do_xcom_push=True,
+        get_logs=True,
     )
 
     create_file >> read_file >> list_files 
