@@ -64,6 +64,6 @@ with DAG(
         is_delete_operator_pod=True,
     )
 
-    list_files >> create_file >> read_file >> list_files 
+    create_file >> read_file >> list_files 
     
 
