@@ -16,7 +16,7 @@ with DAG(
 
     volume = k8s.V1Volume(
         name='my-shared-volume',
-        persistent_volume_claim=k8s.V1PersistentVolumeClaimVolumeSource(claim_name='test-datafabric-airflow-shared-volume')
+        persistent_volume_claim=k8s.V1PersistentVolumeClaimVolumeSource(claim_name='datafabric-airflow-shared-volume-pvc')
     )
 
     volume_mount = k8s.V1VolumeMount(
@@ -38,6 +38,11 @@ with DAG(
         is_delete_operator_pod=False,
         do_xcom_push=True,
         get_logs=True,
+        security_context=k8s.V1SecurityContext(
+        run_as_user=5000,
+        run_as_group=5000,
+        allow_privilege_escalation=True
+        ),        
     )
 
     read_file = KubernetesPodOperator(
@@ -53,6 +58,11 @@ with DAG(
         is_delete_operator_pod=False,
         do_xcom_push=True,
         get_logs=True,
+        security_context=k8s.V1SecurityContext(
+        run_as_user=5000,
+        run_as_group=5000,
+        allow_privilege_escalation=True
+        ),        
     )
 
     create_file >> read_file
